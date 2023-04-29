@@ -26,7 +26,7 @@ class HttpClient
     /**
      * @param string $url
      * @return mixed
-     * @throws \Exception
+     * @throws HttpClientException
      */
     public function get(string $url)
     {
@@ -40,7 +40,7 @@ class HttpClient
      * @param string $url
      * @param null $body
      * @return mixed
-     * @throws \Exception
+     * @throws HttpClientException
      */
     public function post(string $url, $body = null)
     {
@@ -55,7 +55,7 @@ class HttpClient
      * @param string $url
      * @param null $body
      * @return mixed
-     * @throws \Exception
+     * @throws HttpClientException
      */
     public function put(string $url, $body = null)
     {
@@ -70,7 +70,7 @@ class HttpClient
      * @param string $url
      * @param null $body
      * @return mixed
-     * @throws \Exception
+     * @throws HttpClientException
      */
     public function patch(string $url, $body = null)
     {
@@ -85,7 +85,7 @@ class HttpClient
      * @param string $url
      * @param null $body
      * @return mixed
-     * @throws \Exception
+     * @throws HttpClientException
      */
     public function delete(string $url, $body = null)
     {
@@ -100,7 +100,7 @@ class HttpClient
      * @param string $url
      * @param array $options
      * @return mixed
-     * @throws \Exception
+     * @throws HttpClientException
      */
     private function request(string $url, array $options)
     {
@@ -133,10 +133,16 @@ class HttpClient
 
         curl_close($ch);
 
+        $data = json_decode($response);
+
         if ($status_code >= 400) {
-            throw new \Exception($response);
+            if (isset($data->error)) {
+                throw new HttpClientException($data->error);
+            }
+
+            throw new HttpClientException($response);
         }
 
-        return json_decode($response);
+        return $data;
     }
 }

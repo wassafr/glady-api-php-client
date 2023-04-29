@@ -2,8 +2,6 @@
 
 namespace Wassa\GladyApiClient;
 
-use Exception;
-
 class GladyClient
 {
     private HttpClient $httpClient;
@@ -16,7 +14,7 @@ class GladyClient
     /**
      * @param array $params
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function ssoCreateToken(array $params)
     {
@@ -28,28 +26,40 @@ class GladyClient
 
     /**
      * @param string $beneficiaryUuid
-     * @return mixed
-     * @throws Exception
+     * @return false|mixed
+     * @throws HttpClientException
      */
     public function beneficiariesGetById(string $beneficiaryUuid)
     {
-        return $this->httpClient->get("beneficiaries/$beneficiaryUuid");
+        $res = $this->httpClient->get("beneficiaries/$beneficiaryUuid");
+
+        if (isset($res->error)) {
+            return false;
+        }
+
+        return $res;
     }
 
     /**
      * @param string $login
-     * @return mixed
-     * @throws Exception
+     * @return false|mixed
+     * @throws HttpClientException
      */
     public function beneficiariesGetByLogin(string $login)
     {
-        return $this->httpClient->get("beneficiaries/login/$login");
+        $res = $this->httpClient->get("beneficiaries/login/$login");
+
+        if (isset($res->error)) {
+            return false;
+        }
+
+        return $res;
     }
 
     /**
      * @param string $beneficiaryUuid
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function beneficiariesGetBalance(string $beneficiaryUuid)
     {
@@ -59,7 +69,7 @@ class GladyClient
     /**
      * @param array $params
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function beneficiariesList(array $params)
     {
@@ -69,7 +79,7 @@ class GladyClient
     /**
      * @param array $params
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function beneficiariesAdd(array $params)
     {
@@ -80,7 +90,7 @@ class GladyClient
      * @param string $beneficiaryUuid
      * @param array $params
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function beneficiariesUpdate(string $beneficiaryUuid, array $params)
     {
@@ -90,7 +100,7 @@ class GladyClient
     /**
      * @param array $beneficiaryUuids
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function beneficiariesDelete(array $beneficiaryUuids)
     {
@@ -99,7 +109,7 @@ class GladyClient
 
     /**
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function walletsList()
     {
@@ -109,7 +119,7 @@ class GladyClient
     /**
      * @param array $params
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function walletsCreateReason(array $params)
     {
@@ -120,7 +130,7 @@ class GladyClient
      * @param int $reasonId
      * @param array $params
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function walletsUpdateReason(int $reasonId, array $params)
     {
@@ -130,7 +140,7 @@ class GladyClient
     /**
      * @param int $reasonId
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function walletsDeleteReason(int $reasonId)
     {
@@ -139,7 +149,7 @@ class GladyClient
 
     /**
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function organisationsListDeposits()
     {
@@ -149,7 +159,7 @@ class GladyClient
     /**
      * @param string $depositId
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function organisationsGetDeposit(string $depositId)
     {
@@ -159,7 +169,7 @@ class GladyClient
     /**
      * @param array $params
      * @return mixed
-     * @throws Exception
+     * @throws HttpClientException
      */
     public function campaignsCreate(array $params)
     {
