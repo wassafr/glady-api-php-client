@@ -20,7 +20,7 @@ class HttpClient
         $this->clientId = $clientId;
         $this->clientSecret = $clientSecret;
         $this->demo = $demo;
-        $this->baseUrl = $this->demo ? "https://clients-api.demo.tech.glady.com/" : "https://clients-api.prod.tech.glady.com/";
+        $this->baseUrl = $this->demo ? "https://clients-api.cadeaux.sta.pluxee.fr/" : "https://clients-api.cadeaux.pluxee.fr/";
     }
 
     /**

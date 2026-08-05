@@ -1,6 +1,6 @@
 # Glady API PHP client
 
-Bibliothèque d'accès à l'API Glady (ex Wedoogift)
+Bibliothèque d'accès à l'API Pluxee (ex Glady (ex Wedoogift))
 
 ## Pré-requis
 
