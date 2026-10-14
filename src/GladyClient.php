@@ -41,19 +41,16 @@ class GladyClient
     }
 
     /**
+     * Get a beneficiary by login.
+     * If the beneficiary does not exist, the API responds with HTTP 200 and error=ERROR_BENEFICIARY_NOT_FOUND
+     *
      * @param string $login
-     * @return false|mixed
-     * @throws HttpClientException
+     * @return mixed beneficiary object, or error object (ex. self::ERROR_BENEFICIARY_NOT_FOUND)
+     * @throws HttpClientException API failure (HTTP >= 400)
      */
     public function beneficiariesGetByLogin(string $login)
     {
-        $res = $this->httpClient->get("beneficiaries/login/$login");
-
-        if (isset($res->error)) {
-            return false;
-        }
-
-        return $res;
+        return $this->httpClient->get("beneficiaries/login/$login");
     }
 
     /**
